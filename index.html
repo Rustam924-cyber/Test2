@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ТИТАН — премиальный мужской фитнес-клуб. Современное оборудование, профессиональные тренера, режим 24/7, SPA, бассейн и хаммам.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27><text y=%27.9em%27 font-size=%2790%27>T</text></svg>">
     <title>ТИТАН | Премиальный мужской фитнес-клуб</title>
     <!-- Подключение шрифта Montserrat для современного премиального вида -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -27,6 +29,7 @@
         }
 
         html {
+            scroll-padding-top: 90px;
             scroll-behavior: smooth; /* Плавная прокрутка */
         }
 
@@ -51,6 +54,7 @@
 
         /* Навигация */
         nav {
+            min-height: 60px;
             position: fixed;
             top: 0;
             width: 100%;
@@ -81,8 +85,8 @@
 
         /* Главный экран (Hero) - локальная картинка пустого зала, адаптирована под размеры экрана */
         .hero {
+            min-height: 100svh;
             min-height: 100vh;
-            height: 100vh;
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -90,8 +94,9 @@
             align-items: center;
             text-align: center;
             /* Затемнение поверх локальной картинки для читаемости текста */
+            background-image: linear-gradient(rgba(10, 10, 10, 0.8), rgba(10, 10, 10, 0.85)), url('./pngtree-an-empty-gym-with-dark-grey-walls-picture-image_2667312.jpg.png');
             background-image: linear-gradient(rgba(10, 10, 10, 0.8), rgba(10, 10, 10, 0.85)),
-                        url('./pngtree-an-empty-gym-with-dark-grey-walls-picture-image_2667312.jpg.png');
+                        image-set(url('./hero-gym-1200.webp') type('image/webp') 1x, url('./pngtree-an-empty-gym-with-dark-grey-walls-picture-image_2667312.jpg.png') type('image/png') 1x);
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
@@ -217,7 +222,7 @@
 
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
             gap: 30px;
             max-width: 1200px;
             margin: 0 auto;
@@ -341,10 +346,11 @@
         @media (max-width: 992px) {
             .hero h1 { font-size: 4rem; }
             .price-card.vip { transform: scale(1); }
-            .cafe-banner { flex-direction: column; text-align: center; }
+            .cafe-banner { flex-direction: column; text-align: center; border-left: none; border-top: 5px solid var(--accent-color); padding: 30px 20px; }
         }
 
         @media (max-width: 768px) {
+            .nav-links { flex-wrap: wrap; justify-content: center; gap: 15px; }
             nav { padding: 20px; flex-direction: column; gap: 15px; }
             .hero h1 { font-size: 3rem; }
             .hero {
@@ -361,6 +367,8 @@
         }
 
         @media (max-width: 480px) {
+            .section-title { margin-bottom: 30px; }
+            .price { font-size: 2rem; }
             .hero h1 { font-size: 2.5rem; }
             .nav-links { flex-wrap: wrap; justify-content: center; gap: 15px; }
         }
@@ -383,7 +391,7 @@
     <section class="hero" id="about">
         <h1>Территория сильных</h1>
         <p>Премиальное фитнес-пространство закрытого типа только для мужчин. Создай лучшую версию себя в атмосфере брутальной эстетики и абсолютного комфорта.</p>
-        <a href="#pricing"><button class="btn">Стать резидентом</button></a>
+        <a href="#pricing" class="btn">Стать резидентом</a>
     </section>
 
     <!-- Преимущества -->
@@ -441,7 +449,7 @@
                     <li><i class="fa-solid fa-check"></i> 1 вводная тренировка</li>
                     <li><i class="fa-solid fa-check"></i> Шкафчик в общей раздевалке</li>
                 </ul>
-                <button class="btn" style="width: 100%; background: transparent; border: 1px solid var(--accent-color); color: var(--accent-color);">Оформить</button>
+                <a href="#contacts" class="btn" style="display: block; width: 100%; background: transparent; border: 1px solid var(--accent-color); color: var(--accent-color);">Оформить</a>
             </div>
 
             <!-- VIP (Центральный) -->
@@ -457,7 +465,7 @@
                     <li><i class="fa-solid fa-check"></i> Депозит 15 000 ₽ в фитнес-кафе</li>
                     <li><i class="fa-solid fa-check"></i> 10 персональных тренировок</li>
                 </ul>
-                <button class="btn" style="width: 100%;">Стать VIP</button>
+                <a href="#contacts" class="btn" style="display: block; width: 100%;">Стать VIP</a>
             </div>
 
             <!-- Безлимитный -->
@@ -470,7 +478,7 @@
                     <li><i class="fa-solid fa-check"></i> Доступ в бассейн и сауну</li>
                     <li><i class="fa-solid fa-check"></i> 3 гостевых визита</li>
                 </ul>
-                <button class="btn" style="width: 100%; background: transparent; border: 1px solid var(--accent-color); color: var(--accent-color);">Оформить</button>
+                <a href="#contacts" class="btn" style="display: block; width: 100%; background: transparent; border: 1px solid var(--accent-color); color: var(--accent-color);">Оформить</a>
             </div>
         </div>
     </section>
@@ -496,7 +504,7 @@
             </div>
         </div>
         <div class="copyright">
-            &copy; 2023 Премиальный мужской фитнес-клуб «ТИТАН». Все права защищены.
+            &copy; 2026 Премиальный мужской фитнес-клуб «ТИТАН». Все права защищены.
         </div>
     </footer>
 
