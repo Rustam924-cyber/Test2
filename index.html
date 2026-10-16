@@ -42,7 +42,16 @@
 
         html {
             scroll-padding-top: 90px;
-            scroll-behavior: smooth; /* Плавная прокрутка */
+            scroll-behavior: smooth; /* Плавная прокрутка (фолбэк, если JS отключён) */
+        }
+
+        /* Отступ якорей под фиксированную шапку */
+        #about, #advantages, #gallery, #pricing, #contacts {
+            scroll-margin-top: 90px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
         }
 
         body {
@@ -614,6 +623,8 @@
         }
 
         @media (max-width: 768px) {
+            html { scroll-padding-top: 76px; }
+            #about, #advantages, #gallery, #pricing, #contacts { scroll-margin-top: 76px; }
             nav { padding: 16px 20px; flex-direction: row; gap: 12px; }
             .burger { display: inline-flex; }
             .nav-links {
@@ -861,10 +872,10 @@
 
     <script>
         // Бургер-меню (<768px)
-        (function () {
+        var TitanMenu = (function () {
             var burger = document.querySelector('.burger');
             var menu = document.getElementById('main-menu');
-            if (!burger || !menu) return;
+            if (!burger || !menu) return { isOpen: function () { return false; }, setOpen: function () {} };
             function setOpen(open) {
                 menu.classList.toggle('open', open);
                 burger.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -873,11 +884,68 @@
             burger.addEventListener('click', function () {
                 setOpen(!menu.classList.contains('open'));
             });
-            menu.addEventListener('click', function (e) {
-                if (e.target.closest('a')) setOpen(false);
-            });
             document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape') setOpen(false);
+            });
+            return {
+                isOpen: function () { return menu.classList.contains('open'); },
+                setOpen: setOpen
+            };
+        })();
+
+        // Плавный скролл по пунктам меню с easing (О клубе / Преимущества / Зал / Тарифы / Контакты)
+        (function () {
+            var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var DURATION = 900;
+            var menuJustClosedAt = 0;
+
+            function easeInOutCubic(t) {
+                return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            }
+
+            function headerOffset() {
+                var nav = document.querySelector('nav');
+                return (nav ? nav.offsetHeight : 76) + 12;
+            }
+
+            function smoothScrollTo(target) {
+                var startY = window.pageYOffset;
+                var endY = Math.max(0, target.getBoundingClientRect().top + startY - headerOffset());
+                if (reduceMotion) { window.scrollTo(0, endY); return; }
+                var start = null;
+                function step(now) {
+                    if (!start) start = now;
+                    var t = Math.min((now - start) / DURATION, 1);
+                    window.scrollTo(0, startY + (endY - startY) * easeInOutCubic(t));
+                    if (t < 1) requestAnimationFrame(step);
+                }
+                requestAnimationFrame(step);
+            }
+
+            document.addEventListener('click', function (e) {
+                var link = e.target.closest('.nav-links a[href^="#"]');
+                if (!link) return;
+                var id = link.getAttribute('href');
+                if (id.length < 2) return;
+                var target = document.querySelector(id);
+                if (!target) return;
+                e.preventDefault();
+                // На мобильном: сначала плавно закрываем бургер, потом стартуем скролл
+                if (TitanMenu.isOpen()) {
+                    TitanMenu.setOpen(false);
+                    menuJustClosedAt = Date.now();
+                    setTimeout(function () {
+                        smoothScrollTo(target);
+                        history.replaceState(null, '', id);
+                    }, 160);
+                } else {
+                    // Небольшая задержка после закрытия меню, чтобы не было прыжка
+                    var wait = Math.max(0, 160 - (Date.now() - menuJustClosedAt));
+                    setTimeout(function () {
+                        smoothScrollTo(target);
+                        history.replaceState(null, '', id);
+                    }, wait);
+                }
             });
         })();
 
