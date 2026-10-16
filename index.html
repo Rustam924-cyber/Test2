@@ -3,9 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ТИТАН — премиальный мужской фитнес-клуб. Современное оборудование, профессиональные тренера, режим 24/7, SPA, бассейн и хаммам.">
+    <meta name="description" content="ТИТАН — премиальный мужской фитнес-клуб в Москве. Тренажерный зал, персональные тренеры, режим 24/7, SPA, бассейн 25 м и хаммам. БЦ «Империя», ул. Стальная, 1.">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0a0a0a">
+    <link rel="canonical" href="https://titan-fitness-moscow.example/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:title" content="ТИТАН | Премиальный мужской фитнес-клуб в Москве">
+    <meta property="og:description" content="Закрытый мужской клуб в Москве: зал, тренеры, 24/7, SPA, бассейн и хаммам. Оставь заявку — перезвоним за 15 минут.">
+    <meta property="og:image" content="./hero-gym-1200.webp">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27><text y=%27.9em%27 font-size=%2790%27>T</text></svg>">
-    <title>ТИТАН | Премиальный мужской фитнес-клуб</title>
+    <title>ТИТАН | Премиальный мужской фитнес-клуб в Москве</title>
+    <!-- Скорость: preconnect для шрифтов и CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <!-- Подключение шрифта Montserrat для современного премиального вида -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
     <!-- Подключение FontAwesome для иконок (никаких смайликов) -->
@@ -74,14 +86,43 @@
             letter-spacing: 4px;
         }
 
+        .logo--footer { font-size: 32px; }
+
         .nav-links {
             display: flex;
             gap: 30px;
+            align-items: center;
         }
 
         .nav-links a:hover {
             color: var(--accent-color);
         }
+
+        /* Бургер-кнопка (показывается только на мобильных) */
+        .burger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 44px;
+            height: 44px;
+            padding: 10px;
+            background: transparent;
+            border: 1px solid rgba(197, 160, 89, 0.4);
+            cursor: pointer;
+        }
+
+        .burger span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background: var(--accent-color);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+        .burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
         /* Главный экран (Hero) - локальная картинка пустого зала, адаптирована под размеры экрана */
         .hero {
@@ -93,10 +134,9 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            /* Затемнение поверх локальной картинки для читаемости текста */
+            /* Затемнение поверх локальной картинки для читаемости текста.
+               База — PNG-фолбэк. WebP (75 КБ) подключается через @supports ниже. */
             background-image: linear-gradient(rgba(10, 10, 10, 0.8), rgba(10, 10, 10, 0.85)), url('./pngtree-an-empty-gym-with-dark-grey-walls-picture-image_2667312.jpg.png');
-            background-image: linear-gradient(rgba(10, 10, 10, 0.8), rgba(10, 10, 10, 0.85)),
-                        image-set(url('./hero-gym-1200.webp') type('image/webp') 1x, url('./pngtree-an-empty-gym-with-dark-grey-walls-picture-image_2667312.jpg.png') type('image/png') 1x);
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
@@ -113,11 +153,32 @@
             color: var(--accent-color);
         }
 
+        /* SEO: надстрочник сохраняет фразу «Территория сильных» без потери H1 */
+        .hero-eyebrow {
+            display: inline-block;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--text-main);
+            border: 1px solid rgba(197, 160, 89, 0.5);
+            padding: 8px 18px;
+            margin-bottom: 22px;
+        }
+
         .hero p {
             font-size: 1.2rem;
             max-width: 600px;
             margin-bottom: 40px;
             color: var(--text-muted);
+        }
+
+        /* WebP-приоритет только там, где image-set поддерживается (фолбэк выше) */
+        @supports (background-image: image-set(url('./hero-gym-1200.webp') type('image/webp') 1x)) {
+            .hero {
+                background-image: linear-gradient(rgba(10, 10, 10, 0.8), rgba(10, 10, 10, 0.85)),
+                    image-set(url('./hero-gym-1200.webp') type('image/webp') 1x, url('./pngtree-an-empty-gym-with-dark-grey-walls-picture-image_2667312.jpg.png') type('image/png') 1x);
+            }
         }
 
         .btn {
@@ -138,6 +199,26 @@
             transform: translateY(-3px);
             box-shadow: 0 10px 20px rgba(197, 160, 89, 0.2);
         }
+
+        /* Контурная кнопка тарифов (вместо инлайн-стилей) */
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .btn-outline:hover {
+            background: rgba(197, 160, 89, 0.12);
+            color: var(--accent-hover);
+            border-color: var(--accent-hover);
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        button.btn { font-family: inherit; }
 
         /* Секция преимуществ */
         .section-title {
@@ -330,6 +411,189 @@
             text-align: center;
         }
 
+        .contact-item a {
+            color: var(--text-main);
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .messengers {
+            display: flex;
+            gap: 12px;
+            margin-top: 5px;
+            flex-wrap: wrap;
+        }
+
+        .messenger-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border: 1px solid rgba(197, 160, 89, 0.5);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .messenger-btn i { font-size: 1.1rem; color: var(--accent-color); }
+
+        .messenger-btn:hover {
+            background: rgba(197, 160, 89, 0.12);
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .legal {
+            width: 100%;
+            text-align: center;
+            margin-top: 18px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .legal a {
+            color: var(--text-muted);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .legal a:hover { color: var(--accent-color); }
+
+        /* Галерея зала (SEO: реальные <img> с alt) */
+        .gallery {
+            padding: 60px 5vw;
+            background-color: var(--surface-color);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery figure {
+            border: 1px solid var(--surface-light);
+            background: var(--bg-color);
+            overflow: hidden;
+        }
+
+        .gallery img {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery figure:hover img { transform: scale(1.03); }
+
+        .gallery figcaption {
+            padding: 14px 18px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Модалка заявки */
+        body.modal-open { overflow: hidden; }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.72);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+
+        .modal-overlay.open { display: flex; }
+        .modal-overlay.visible { opacity: 1; }
+
+        .modal {
+            width: min(480px, 100%);
+            background: var(--surface-color);
+            border: 1px solid rgba(197, 160, 89, 0.4);
+            padding: 34px 30px 30px;
+            position: relative;
+            transform: translateY(14px);
+            transition: transform 0.25s ease;
+        }
+
+        .modal-overlay.visible .modal { transform: translateY(0); }
+
+        .modal h2 {
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .modal h2 span { color: var(--accent-color); }
+        .modal-sub { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 22px; }
+
+        .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 38px;
+            height: 38px;
+            background: transparent;
+            border: 1px solid rgba(197, 160, 89, 0.4);
+            color: var(--text-main);
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        .modal-close:hover { border-color: var(--accent-color); color: var(--accent-color); }
+        .form-field { margin-bottom: 16px; text-align: left; }
+
+        .form-field label {
+            display: block;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .form-field input[type="text"],
+        .form-field input[type="tel"] {
+            width: 100%;
+            padding: 13px 14px;
+            background: var(--bg-color);
+            border: 1px solid var(--surface-light);
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .form-field input:focus { outline: 1px solid var(--accent-color); border-color: var(--accent-color); }
+        .form-error { display: none; color: #e08a8a; font-size: 0.85rem; margin-top: 6px; }
+        .form-field.invalid .form-error { display: block; }
+        .form-field.invalid input { border-color: #e08a8a; }
+
+        .form-agree { display: flex; gap: 10px; align-items: flex-start; font-size: 0.8rem; color: var(--text-muted); margin: 6px 0 20px; }
+        .form-agree input { margin-top: 3px; accent-color: var(--accent-color); }
+        .form-agree a { color: var(--accent-color); text-decoration: underline; text-underline-offset: 3px; }
+
+        .form-success { display: none; text-align: center; padding: 10px 0 4px; }
+        .form-success i { font-size: 2.6rem; color: var(--accent-color); margin-bottom: 14px; }
+        .form-success h3 { margin-bottom: 10px; }
+        .form-success p { color: var(--text-muted); }
+        .modal.sent form { display: none; }
+        .modal.sent .form-success { display: block; }
+
         .copyright {
             width: 100%;
             text-align: center;
@@ -350,8 +614,24 @@
         }
 
         @media (max-width: 768px) {
-            .nav-links { flex-wrap: wrap; justify-content: center; gap: 15px; }
-            nav { padding: 20px; flex-direction: column; gap: 15px; }
+            nav { padding: 16px 20px; flex-direction: row; gap: 12px; }
+            .burger { display: inline-flex; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                background: rgba(10, 10, 10, 0.98);
+                border-bottom: 1px solid rgba(197, 160, 89, 0.25);
+                padding: 10px 20px 18px;
+            }
+            .nav-links.open { display: flex; }
+            .nav-links a { padding: 12px 4px; border-top: 1px solid rgba(255,255,255,0.06); }
+            .nav-links a:first-child { border-top: none; }
             .hero h1 { font-size: 3rem; }
             .hero {
                 min-height: 90vh;
@@ -364,13 +644,18 @@
 
         @media (max-width: 600px) {
             .grid-container { grid-template-columns: 1fr; }
+            .gallery-grid { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 480px) {
             .section-title { margin-bottom: 30px; }
             .price { font-size: 2rem; }
             .hero h1 { font-size: 2.5rem; }
-            .nav-links { flex-wrap: wrap; justify-content: center; gap: 15px; }
+            .hero-eyebrow { letter-spacing: 3px; font-size: 0.8rem; }
+            .pricing { padding: 50px 20px 70px; }
+            .price-card { padding: 35px 20px; }
+            .modal { padding: 28px 20px 24px; }
+            .messengers { width: 100%; justify-content: center; }
         }
     </style>
 </head>
@@ -379,9 +664,15 @@
     <!-- Навигация -->
     <nav>
         <div class="logo">ТИТАН</div>
-        <div class="nav-links">
+        <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="main-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="nav-links" id="main-menu">
             <a href="#about">О клубе</a>
             <a href="#advantages">Преимущества</a>
+            <a href="#gallery">Зал</a>
             <a href="#pricing">Тарифы</a>
             <a href="#contacts">Контакты</a>
         </div>
@@ -389,9 +680,10 @@
 
     <!-- Главный экран -->
     <section class="hero" id="about">
-        <h1>Территория сильных</h1>
-        <p>Премиальное фитнес-пространство закрытого типа только для мужчин. Создай лучшую версию себя в атмосфере брутальной эстетики и абсолютного комфорта.</p>
-        <a href="#pricing" class="btn">Стать резидентом</a>
+        <span class="hero-eyebrow">Территория сильных</span>
+        <h1>Премиальный мужской фитнес-клуб в Москве</h1>
+        <p>Премиальное фитнес-пространство закрытого типа только для мужчин в Москве. Создай лучшую версию себя в атмосфере брутальной эстетики и абсолютного комфорта.</p>
+        <button type="button" class="btn" data-modal-tariff="Резидент">Стать резидентом</button>
     </section>
 
     <!-- Преимущества -->
@@ -429,8 +721,23 @@
             <i class="fa-solid fa-utensils"></i>
             <div class="cafe-banner-text">
                 <h3>Кафе правильного и спортивного питания</h3>
-                <p>В нашем клубе работает премиум фитнес-бар. Свежевыжатые соки, протеиновые коктейли, BCAA, авторский кофе и сбалансированные рационы для набора массы или сушки.</p>
+                <p>В нашем клубе в Москве работает премиум фитнес-бар. Свежевыжатые соки, протеиновые коктейли, BCAA, авторский кофе и сбалансированные рационы для набора массы или сушки.</p>
             </div>
+        </div>
+    </section>
+
+    <!-- Зал / Галерея (реальные <img> с alt для SEO) -->
+    <section class="gallery" id="gallery">
+        <h2 class="section-title">Зал <span>Титан</span></h2>
+        <div class="gallery-grid">
+            <figure>
+                <img src="./hero-gym-1200.webp" alt="Тренажерный зал Титан Москва — зона свободных весов" loading="lazy" width="1200" height="673">
+                <figcaption>Зона свободных весов — тренажерный зал «Титан», Москва</figcaption>
+            </figure>
+            <figure>
+                <img src="./hero-gym-1200.webp" alt="Премиальный мужской фитнес-клуб Титан в Москве — интерьер зала" loading="lazy" width="1200" height="673">
+                <figcaption>Интерьер премиального мужского клуба в Москве, БЦ «Империя»</figcaption>
+            </figure>
         </div>
     </section>
 
@@ -449,7 +756,7 @@
                     <li><i class="fa-solid fa-check"></i> 1 вводная тренировка</li>
                     <li><i class="fa-solid fa-check"></i> Шкафчик в общей раздевалке</li>
                 </ul>
-                <a href="#contacts" class="btn" style="display: block; width: 100%; background: transparent; border: 1px solid var(--accent-color); color: var(--accent-color);">Оформить</a>
+                <button type="button" class="btn btn-outline btn-block" data-modal-tariff="Базовый">Оформить</button>
             </div>
 
             <!-- VIP (Центральный) -->
@@ -465,7 +772,7 @@
                     <li><i class="fa-solid fa-check"></i> Депозит 15 000 ₽ в фитнес-кафе</li>
                     <li><i class="fa-solid fa-check"></i> 10 персональных тренировок</li>
                 </ul>
-                <a href="#contacts" class="btn" style="display: block; width: 100%;">Стать VIP</a>
+                <button type="button" class="btn btn-block" data-modal-tariff="VIP">Стать VIP</button>
             </div>
 
             <!-- Безлимитный -->
@@ -478,7 +785,7 @@
                     <li><i class="fa-solid fa-check"></i> Доступ в бассейн и сауну</li>
                     <li><i class="fa-solid fa-check"></i> 3 гостевых визита</li>
                 </ul>
-                <a href="#contacts" class="btn" style="display: block; width: 100%; background: transparent; border: 1px solid var(--accent-color); color: var(--accent-color);">Оформить</a>
+                <button type="button" class="btn btn-outline btn-block" data-modal-tariff="Безлимитный">Оформить</button>
             </div>
         </div>
     </section>
@@ -486,12 +793,12 @@
     <!-- Подвал / Контакты -->
     <footer id="contacts">
         <div class="footer-content">
-            <div class="logo" style="font-size: 32px;">ТИТАН</div>
-            
+            <div class="logo logo--footer">ТИТАН</div>
+
             <div class="contact-info">
                 <div class="contact-item">
                     <i class="fa-solid fa-location-dot"></i>
-                    <span>г. Москва, ул. Стальная, д. 1 (БЦ "Империя")</span>
+                    <span>г. Москва, ул. Стальная, д. 1 (БЦ «Империя»)</span>
                 </div>
                 <div class="contact-item">
                     <i class="fa-solid fa-clock"></i>
@@ -499,14 +806,147 @@
                 </div>
                 <div class="contact-item">
                     <i class="fa-solid fa-phone"></i>
-                    <span>+7 (495) 123-45-67</span>
+                    <a href="tel:+74951234567">+7 (495) 123-45-67</a>
+                </div>
+                <div class="messengers">
+                    <a class="messenger-btn" href="https://wa.me/74951234567" target="_blank" rel="noopener">
+                        <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                    </a>
+                    <a class="messenger-btn" href="https://t.me/titan_fitness_moscow" target="_blank" rel="noopener">
+                        <i class="fa-brands fa-telegram"></i> Telegram
+                    </a>
                 </div>
             </div>
         </div>
+        <div class="legal">
+            ООО «Титан» · ИНН 7700000000 · ОГРН 1207700000000 · г. Москва ·
+            <a href="#privacy" id="privacy-link">Политика конфиденциальности</a>
+        </div>
         <div class="copyright">
-            &copy; 2026 Премиальный мужской фитнес-клуб «ТИТАН». Все права защищены.
+            &copy; 2026 Премиальный мужской фитнес-клуб «ТИТАН» в Москве. Все права защищены.
         </div>
     </footer>
+
+    <!-- Модалка заявки (захват лидов) -->
+    <div class="modal-overlay" id="lead-modal" aria-hidden="true">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="lead-modal-title">
+            <button class="modal-close" type="button" data-close-modal aria-label="Закрыть форму">✕</button>
+            <h2 id="lead-modal-title">Оставить <span>заявку</span></h2>
+            <p class="modal-sub" id="lead-modal-sub">Тариф: Резидент. Перезвоним за 15 минут и ответим на вопросы.</p>
+            <form id="lead-form" novalidate>
+                <input type="hidden" name="tariff" id="lead-tariff" value="Резидент">
+                <div class="form-field" id="field-name">
+                    <label for="lead-name">Имя</label>
+                    <input type="text" id="lead-name" name="name" placeholder="Как к вам обращаться" autocomplete="name">
+                    <div class="form-error">Введите имя (минимум 2 буквы)</div>
+                </div>
+                <div class="form-field" id="field-phone">
+                    <label for="lead-phone">Телефон</label>
+                    <input type="tel" id="lead-phone" name="phone" placeholder="+7 (___) ___-__-__" autocomplete="tel" inputmode="tel">
+                    <div class="form-error">Введите корректный телефон (минимум 10 цифр)</div>
+                </div>
+                <label class="form-agree">
+                    <input type="checkbox" id="lead-agree" checked>
+                    <span>Согласен на обработку персональных данных и с <a href="#privacy" id="privacy-link-modal">политикой конфиденциальности</a></span>
+                </label>
+                <button type="submit" class="btn btn-block">Жду звонка</button>
+            </form>
+            <div class="form-success" aria-live="polite">
+                <i class="fa-solid fa-circle-check"></i>
+                <h3>Заявка отправлена</h3>
+                <p>Менеджер «Титана» свяжется с вами в течение 15 минут в рабочее время клуба в Москве.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Бургер-меню (<768px)
+        (function () {
+            var burger = document.querySelector('.burger');
+            var menu = document.getElementById('main-menu');
+            if (!burger || !menu) return;
+            function setOpen(open) {
+                menu.classList.toggle('open', open);
+                burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+                burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+            }
+            burger.addEventListener('click', function () {
+                setOpen(!menu.classList.contains('open'));
+            });
+            menu.addEventListener('click', function (e) {
+                if (e.target.closest('a')) setOpen(false);
+            });
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') setOpen(false);
+            });
+        })();
+
+        // Модалка заявки: открытие по data-modal-tariff, валидация, экран успеха
+        (function () {
+            var overlay = document.getElementById('lead-modal');
+            var modal = overlay.querySelector('.modal');
+            var form = document.getElementById('lead-form');
+            var tariffInput = document.getElementById('lead-tariff');
+            var sub = document.getElementById('lead-modal-sub');
+            var nameInput = document.getElementById('lead-name');
+            var phoneInput = document.getElementById('lead-phone');
+            var agree = document.getElementById('lead-agree');
+            var fieldName = document.getElementById('field-name');
+            var fieldPhone = document.getElementById('field-phone');
+            var lastFocus = null;
+
+            function openModal(tariff) {
+                lastFocus = document.activeElement;
+                tariffInput.value = tariff || 'Резидент';
+                sub.textContent = 'Тариф: ' + tariffInput.value + '. Перезвоним за 15 минут и ответим на вопросы.';
+                modal.classList.remove('sent');
+                overlay.classList.add('open');
+                requestAnimationFrame(function () { overlay.classList.add('visible'); });
+                overlay.setAttribute('aria-hidden', 'false');
+                document.body.classList.add('modal-open');
+                setTimeout(function () { nameInput.focus(); }, 60);
+            }
+            function closeModal() {
+                overlay.classList.remove('visible');
+                setTimeout(function () {
+                    overlay.classList.remove('open');
+                    overlay.setAttribute('aria-hidden', 'true');
+                    document.body.classList.remove('modal-open');
+                    if (lastFocus && lastFocus.focus) lastFocus.focus();
+                }, 220);
+            }
+            document.addEventListener('click', function (e) {
+                var btn = e.target.closest('[data-modal-tariff]');
+                if (btn) { openModal(btn.getAttribute('data-modal-tariff')); return; }
+                if (e.target.closest('[data-close-modal]')) { closeModal(); return; }
+                if (e.target === overlay) closeModal();
+            });
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+            });
+            phoneInput.addEventListener('input', function () {
+                phoneInput.value = phoneInput.value.replace(/[^\d+\s()\-]/g, '').slice(0, 20);
+            });
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                var nameOk = nameInput.value.trim().replace(/[^A-Za-zА-Яа-яЁё\- ]/g, '').length >= 2;
+                var digits = phoneInput.value.replace(/\D/g, '');
+                var phoneOk = digits.length >= 10 && digits.length <= 12;
+                fieldName.classList.toggle('invalid', !nameOk);
+                fieldPhone.classList.toggle('invalid', !phoneOk);
+                if (!nameOk) { nameInput.focus(); return; }
+                if (!phoneOk) { phoneInput.focus(); return; }
+                if (!agree.checked) { agree.focus(); return; }
+                modal.classList.add('sent');
+            });
+            function privacyStub(e) {
+                e.preventDefault();
+                alert('Политика конфиденциальности (ФЗ-152): оставляя заявку, вы соглашаетесь на обработку имени и телефона для связи клуба «Титан», г. Москва. Полный текст разместите здесь.');
+            }
+            document.getElementById('privacy-link').addEventListener('click', privacyStub);
+            document.getElementById('privacy-link-modal').addEventListener('click', privacyStub);
+        })();
+    </script>
 
 </body>
 </html>
